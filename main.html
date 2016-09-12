@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link href='https://fonts.googleapis.com/css?family=Montserrat:300,400' rel='stylesheet' type='text/css'>
+        <style>
+            body {
+              font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            }
+           
+            div.row {
+                text-align: right;
+            }
+            p.message {
+                display: inline-block;
+                padding: 6px;
+                border-radius: 4px;
+                font-size: 12px;
+                max-width: 360px;
+            }
+            p.message_from_them {
+                background-color: lightgray;
+            }
+            p.message_to_them {
+                background-color: lightblue;
+                text-align: right;
+            }
+            p.message_time {
+                color: gray;
+                font-size: 10px;
+            }
+        </style>
+    </head>
+    <body>
+
+    <div id="whole_window">
+        <div id="center_frame" style="width:480px; margin: 0px auto;">
+
+            {% for message in messages %}
+                {% if message.from_them %}
+                <div style="text-align:left">
+                    <p class="message message_from_them">{{ message.message|safe }}</p>
+                    <p class="message_time">{{ message.date_sent }}</p>
+                </div>
+                {% else %}
+                <div style="text-align:right">
+                    <p class="message message_to_them">{{ message.message|safe }}</p>
+                    <p class="message_time">{{ message.date_sent }}</p>
+                </div>
+                {% endif %}
+                <div style="height:16px;"></div>
+            {% endfor %}
+                            
+        </div>
+    </div>
+
+    </body>
+</html>
