@@ -1,8 +1,8 @@
 import re
 from twilio.rest import TwilioRestClient
 
-account_sid = ''
-auth_token  = ''
+account_sid = '<Your Twilio account SID>'
+auth_token  = '<Your Twilio auth token>'
 
 client = TwilioRestClient(account_sid, auth_token)
 
@@ -11,7 +11,7 @@ app = Flask(__name__, template_folder='.')
 
 @app.route('/')
 def hello_world():
-    return 'Hello, World!'
+    return render_template('main.html')
 
 @app.route("/chat/")
 def all_zips():
@@ -24,12 +24,12 @@ def show_upcoming_zip_time(number):
     if number[0] != '1':
         number = '1' + number
     number = '+' +  number
-     
+
     user_messages = getSMS(number)
     if len(user_messages) == 0:
-        return "Couldn't find any messages to/from that number"
+        return "Couldn't find any messages to/from %s" % (number, )
 
-    return render_template('main.html', messages=user_messages)
+    return render_template('main.html', messages=user_messages, user_number=number)
 
 def getSMS(user_number):
     from_messages = client.messages.list(from_=user_number) # messages from them

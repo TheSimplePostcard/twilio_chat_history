@@ -6,7 +6,7 @@
             body {
               font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
             }
-           
+
             div.row {
                 text-align: right;
             }
@@ -27,29 +27,43 @@
             p.message_time {
                 color: gray;
                 font-size: 10px;
+                margin-top: 6px;
             }
         </style>
+        <title>Chat History</title>
     </head>
     <body>
 
     <div id="whole_window">
         <div id="center_frame" style="width:480px; margin: 0px auto;">
 
-            {% for message in messages %}
-                {% if message.from_them %}
-                <div style="text-align:left">
-                    <p class="message message_from_them">{{ message.message|safe }}</p>
-                    <p class="message_time">{{ message.date_sent }}</p>
+            {% if user_number %}
+
+                <h2>Chat History: {{ user_number }}</h2>
+                {% for message in messages %}
+                    {% if message.from_them %}
+                    <div style="text-align:left">
+                        <p class="message message_from_them">{{ message.message|safe }}</p>
+                        <p class="message_time">{{ message.date_sent }}</p>
+                    </div>
+                    {% else %}
+                    <div style="text-align:right">
+                        <p class="message message_to_them">{{ message.message|safe }}</p>
+                        <p class="message_time">{{ message.date_sent }}</p>
+                    </div>
+                    {% endif %}
+                    <div style="height:16px;"></div>
+                {% endfor %}
+
+            {% else %}
+                <div style="text-align:center;margin-top:30px;">
+                    <label>Phone Number</label>
+                    <input id="pn" style="padding:8px;margin:2px;font-size:14px;" type="text" placeholder="xxxxxxxxxx">
+                    <button style="padding:8px;margin:2px;font-size:14px;cursor:pointer;" onclick="location.href='/chat/'+document.getElementById('pn').value">Go</button>
                 </div>
-                {% else %}
-                <div style="text-align:right">
-                    <p class="message message_to_them">{{ message.message|safe }}</p>
-                    <p class="message_time">{{ message.date_sent }}</p>
-                </div>
-                {% endif %}
-                <div style="height:16px;"></div>
-            {% endfor %}
-                            
+
+            {% endif %}
+
         </div>
     </div>
 
