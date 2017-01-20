@@ -23,7 +23,7 @@ def no_chat():
 
 @app.route('/chat/<number>')
 def show_chat(number):
-    # sanitize the zipcode, remove anything that's not a number
+    # sanitize the phone number, remove anything that's not a number
     number = re.sub('[^0-9]', '', number)
     if number[0] != '1':
         number = '1' + number
@@ -40,6 +40,9 @@ def getSMS(user_number):
     to_messages = client.messages.list(to=user_number) # messages to them
     all_messages = []
     for message in from_messages + to_messages:
+        if int(message.num_media) > 0:
+            message.body += message.num_media + " images"
+
         all_messages.append({
             'time': message.date_sent,
             'date_sent': message.date_sent.strftime("%b %d, %Y %H:%M"),

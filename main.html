@@ -12,10 +12,12 @@
             }
             p.message {
                 display: inline-block;
-                padding: 6px;
+                padding: 8px;
                 border-radius: 4px;
                 font-size: 12px;
                 max-width: 360px;
+                margin-bottom: 0.1em;
+                white-space: pre-wrap;
             }
             p.message_from_them {
                 background-color: lightgray;
@@ -27,7 +29,9 @@
             p.message_time {
                 color: gray;
                 font-size: 10px;
-                margin-top: 6px;
+                margin-top: 2px;
+                padding-left: 2px;
+                padding-right: 2px;
             }
         </style>
         <title>Chat History</title>
@@ -35,7 +39,7 @@
     <body>
 
     <div id="whole_window">
-        <div id="center_frame" style="width:480px; margin: 0px auto;">
+        <div id="center_frame" style="width:480px;margin:0px auto;">
 
             {% if user_number %}
 
@@ -43,12 +47,12 @@
                 {% for message in messages %}
                     {% if message.from_them %}
                     <div style="text-align:left">
-                        <p class="message message_from_them">{{ message.message|safe }}</p>
+                        <p class="message message_from_them">{{ message.message }}</p>
                         <p class="message_time">{{ message.date_sent }}</p>
                     </div>
                     {% else %}
                     <div style="text-align:right">
-                        <p class="message message_to_them">{{ message.message|safe }}</p>
+                        <p class="message message_to_them">{{ message.message }}</p>
                         <p class="message_time">{{ message.date_sent }}</p>
                     </div>
                     {% endif %}
