@@ -9,10 +9,12 @@ Debugging Twilio SMS chats can be a bit of pain. This tiny python app, will disp
     > git clone git@github.com:TheSimplePostcard/twilio_chat_history.git
     
 2. Create the virtualenv, and install the requirements
+```
     > cd twilio_chat_history
     > virtualenv env
     > source env/bin/activate
     > pip install -r requirements.txt
+```
 
 3. Put your Twilio SID and auth token on lines 4, 5 of main.py
 4.  Run the server
