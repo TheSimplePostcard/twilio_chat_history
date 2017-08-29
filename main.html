@@ -17,7 +17,7 @@
                 font-size: 12px;
                 max-width: 360px;
                 margin-bottom: 0.1em;
-                white-space: pre-wrap;
+                /* white-space: pre-wrap; */
             }
             p.message_from_them {
                 background-color: lightgray;
@@ -25,6 +25,9 @@
             p.message_to_them {
                 background-color: lightblue;
                 text-align: right;
+            }
+            img.message_image {
+                max-width: 280px;
             }
             p.message_time {
                 color: gray;
@@ -47,12 +50,22 @@
                 {% for message in messages %}
                     {% if message.from_them %}
                     <div style="text-align:left">
-                        <p class="message message_from_them">{{ message.message }}</p>
+                        <p class="message message_from_them">
+                          {{ message.message }}
+                          {% for media_uri in message.media %}
+                          <img class="message_image" src="{{ media_uri }}"/>
+                          {% endfor %}
+                        </p>
                         <p class="message_time">{{ message.date_sent }}</p>
                     </div>
                     {% else %}
                     <div style="text-align:right">
-                        <p class="message message_to_them">{{ message.message }}</p>
+                        <p class="message message_to_them">
+                          {{ message.message }}
+                          {% for media_uri in message.media %}
+                          <img class="message_image" src="{{ media_uri }}"/>
+                          {% endfor %}
+                        </p>
                         <p class="message_time">{{ message.date_sent }}</p>
                     </div>
                     {% endif %}

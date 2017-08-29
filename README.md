@@ -1,6 +1,6 @@
 # Twilio SMS Chat GUI
 
-Debugging Twilio SMS chats can be a bit of pain. This tiny python app, will display your Twilio SMS logs to look like a chat.
+Debugging Twilio SMS chats can be a bit of pain. This tiny python app will display your Twilio SMS logs to look like a chat.
 
 ![Alt](/demo.png "Preview of GUI")
 

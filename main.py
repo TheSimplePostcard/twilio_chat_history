@@ -1,10 +1,10 @@
 import re
-from twilio.rest import TwilioRestClient
+from twilio.rest import Client
 
 account_sid = '<Your Twilio account SID>'
 auth_token = '<Your Twilio auth token>'
 
-client = TwilioRestClient(account_sid, auth_token)
+client = Client(account_sid, auth_token)
 
 from flask import Flask, redirect, render_template
 app = Flask(__name__, template_folder='.')
@@ -40,10 +40,8 @@ def getSMS(user_number):
     to_messages = client.messages.list(to=user_number) # messages to them
     all_messages = []
     for message in from_messages + to_messages:
-        if int(message.num_media) > 0:
-            message.body += message.num_media + " images"
 
-        all_messages.append({
+        display_message = {
             'time': message.date_sent,
             'date_sent': message.date_sent.strftime("%b %d, %Y %H:%M"),
             'from_number': message.from_,
@@ -51,7 +49,21 @@ def getSMS(user_number):
             'message': message.body,
             'num_media': message.num_media,
             'from_them': message.from_== user_number
-        })
+        }
+
+        if int(message.num_media) > 0:
+            media_domain = 'https://api.twilio.com'
+            media_uris = []
+            for media in  message.media.list():
+                img_uri = media.uri
+                if img_uri[-5:] == ".json":
+                    img_uri = img_uri[:-5]
+
+                media_uris.append(media_domain + img_uri)
+
+            display_message['media'] = media_uris
+
+        all_messages.append(display_message)
 
     # Sort all the messages by time
     all_messages.sort(key=lambda x: x['time'], reverse=False)
@@ -59,5 +71,5 @@ def getSMS(user_number):
     return all_messages
 
 if __name__ == "__main__":
-    app.debug= False
+    app.debug = False
     app.run(host='127.0.0.1', port=8000)
